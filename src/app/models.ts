@@ -23,7 +23,6 @@ export interface IaddTodoPayload {
 export interface IremoveTodoPayload {
   idTodo: string;
   groupId: string;
-  title: string;
 }
 export interface ItoggleCompleteTodoPayload {
   idTodo: string;

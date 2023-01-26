@@ -14,7 +14,7 @@ function GroupsTodo() {
   const addTodoGroup = () => {
     if (text.trim()) {
       dispatch(addGroup(text));
-      console.log(groupsTodo)
+      /// сюда нужно получить айдишник добавленного элемента
       // dispatch(selectGroup(lastGroupId))
       setText("");
     }

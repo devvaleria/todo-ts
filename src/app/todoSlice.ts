@@ -1,3 +1,4 @@
+import { useAppSelector } from "./hooks";
 import {
   IgroupTodo,
   IinitialState,
@@ -14,6 +15,7 @@ const initialState: IinitialState = {
 
 const findCurrentGroup = (state: IinitialState, id: string) => {
   const currentGroup = state.groupsTodo.find((group) => group.id === id);
+  
   return currentGroup;
 };
 
@@ -26,11 +28,13 @@ const todoSlice = createSlice({
   initialState,
   reducers: {
     addGroup: (state, action: PayloadAction<string>) => {
-      state.groupsTodo.push({
+      const newGroup = {
         id: generateId(),
         title: action.payload,
         todos: [],
-      });
+      }
+      state.groupsTodo.push(newGroup);
+      state.selectedGroup = newGroup.id
     },
     removeGroup: (state, action: PayloadAction<string>) => {
       state.groupsTodo = state.groupsTodo.filter(
@@ -39,12 +43,16 @@ const todoSlice = createSlice({
     },
     addTodo: (state, action: PayloadAction<IaddTodoPayload>) => {
       const currentGroup = findCurrentGroup(state, action.payload.groupId);
-      currentGroup?.todos.push({
-        title: action.payload.title,
-        id: generateId(),
-        completed: false,
-        groupId: currentGroup.id,
-      });
+      if (currentGroup) {
+        const newTodo = {
+          title: action.payload.title,
+          id: generateId(),
+          completed: false,
+          groupId: currentGroup.id,
+        }
+        currentGroup.todos.push(newTodo);
+        state.selectedGroup = newTodo.groupId
+      }
     },
     removeTodo: (state, action: PayloadAction<IremoveTodoPayload>) => {
       const currentGroup = findCurrentGroup(state, action.payload.groupId);
@@ -59,6 +67,7 @@ const todoSlice = createSlice({
     ) => {
       const currentGroup = findCurrentGroup(state, action.payload.groupId);
       if (currentGroup) {
+        
         const currentTodo = currentGroup.todos.find(
           (todo) => todo.id === action.payload.idTodo
         );

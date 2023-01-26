@@ -1,5 +1,4 @@
 import { useAppSelector } from "../../app/hooks";
-import { Itodo } from "../../app/models";
 import { RootState } from "../../app/store";
 import ElementTodo from "./ElementTodo/ElementTodo";
 
