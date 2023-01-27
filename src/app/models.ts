@@ -3,11 +3,13 @@ export interface Itodo {
   id: string;
   title: string;
   completed: boolean;
+  index?: number;
 }
 
 export interface IgroupTodo {
   id: string;
   title: string;
+  active: boolean;
   todos: Itodo[];
 }
 

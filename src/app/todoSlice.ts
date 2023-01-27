@@ -1,4 +1,4 @@
-import { useAppSelector } from "./hooks";
+import { useAppDispatch, useAppSelector } from "./hooks";
 import {
   IgroupTodo,
   IinitialState,
@@ -15,7 +15,6 @@ const initialState: IinitialState = {
 
 const findCurrentGroup = (state: IinitialState, id: string) => {
   const currentGroup = state.groupsTodo.find((group) => group.id === id);
-  
   return currentGroup;
 };
 
@@ -32,9 +31,14 @@ const todoSlice = createSlice({
         id: generateId(),
         title: action.payload,
         todos: [],
-      }
+        active: true,
+      };
+      const prevGroup = state.groupsTodo.find(
+        (group) => group.id === state.selectedGroup
+      );
+      if (prevGroup) prevGroup.active = false;
       state.groupsTodo.push(newGroup);
-      state.selectedGroup = newGroup.id
+      state.selectedGroup = newGroup.id;
     },
     removeGroup: (state, action: PayloadAction<string>) => {
       state.groupsTodo = state.groupsTodo.filter(
@@ -49,9 +53,14 @@ const todoSlice = createSlice({
           id: generateId(),
           completed: false,
           groupId: currentGroup.id,
-        }
+        };
         currentGroup.todos.push(newTodo);
-        state.selectedGroup = newTodo.groupId
+        state.selectedGroup = newTodo.groupId;
+        const prevGroup = state.groupsTodo.find(
+          (group) => group.id === state.selectedGroup
+        );
+        if (prevGroup) prevGroup.active = false;
+        currentGroup.active = true;
       }
     },
     removeTodo: (state, action: PayloadAction<IremoveTodoPayload>) => {
@@ -67,7 +76,6 @@ const todoSlice = createSlice({
     ) => {
       const currentGroup = findCurrentGroup(state, action.payload.groupId);
       if (currentGroup) {
-        
         const currentTodo = currentGroup.todos.find(
           (todo) => todo.id === action.payload.idTodo
         );
@@ -75,7 +83,15 @@ const todoSlice = createSlice({
       }
     },
     selectGroup: (state, action: PayloadAction<string>) => {
+      const prevGroup = state.groupsTodo.find(
+        (group) => group.id === state.selectedGroup
+      );
+      const currentGroup = state.groupsTodo.find(
+        (group) => group.id === action.payload
+      );
+      if (prevGroup) prevGroup.active = false;
       state.selectedGroup = action.payload;
+      if (currentGroup) currentGroup.active = true;
     },
   },
 });

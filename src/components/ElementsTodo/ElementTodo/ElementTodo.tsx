@@ -2,11 +2,11 @@ import { Itodo } from "../../../app/models";
 import { useAppDispatch } from "../../../app/hooks";
 import { toggleCompleteTodo, removeTodo } from "../../../app/todoSlice";
 
-function ElementTodo({ title, id, groupId, completed }: Itodo) {
+function ElementTodo({ title, id, groupId, completed, index }: Itodo) {
+  if (index !== undefined) ++index
   const dispatch = useAppDispatch();
   return (
-    <div>
-      <h3>{title}</h3>
+    <div className="element-todo">
       <input
         type="checkbox"
         checked={completed}
@@ -14,7 +14,8 @@ function ElementTodo({ title, id, groupId, completed }: Itodo) {
           dispatch(toggleCompleteTodo({ idTodo: id, groupId }));
         }}
       />
-      <button onClick = {() => dispatch(removeTodo({idTodo: id, groupId}))}>Delete task</button>
+      <h4 className="element-todo__todo-title">{index}. {title}</h4>
+      <label className = "element-todo__removeTodo" onClick = {() => dispatch(removeTodo({idTodo: id, groupId}))}>&times;</label>
     </div>
   );
 }
