@@ -11,6 +11,7 @@ export interface IgroupTodo {
   title: string;
   active: boolean;
   todos: Itodo[];
+  changeMode: boolean;
 }
 
 export interface IinitialState {
@@ -29,4 +30,9 @@ export interface IremoveTodoPayload {
 export interface ItoggleCompleteTodoPayload {
   idTodo: string;
   groupId: string;
+}
+
+export interface IchangeGroupTitlePayload {
+  groupId: string,
+  newText: string
 }

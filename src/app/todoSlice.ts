@@ -5,6 +5,7 @@ import {
   IaddTodoPayload,
   IremoveTodoPayload,
   ItoggleCompleteTodoPayload,
+  IchangeGroupTitlePayload,
 } from "./models";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -32,6 +33,7 @@ const todoSlice = createSlice({
         title: action.payload,
         todos: [],
         active: true,
+        changeMode: false
       };
       const prevGroup = state.groupsTodo.find(
         (group) => group.id === state.selectedGroup
@@ -55,11 +57,11 @@ const todoSlice = createSlice({
           groupId: currentGroup.id,
         };
         currentGroup.todos.push(newTodo);
-        state.selectedGroup = newTodo.groupId;
         const prevGroup = state.groupsTodo.find(
           (group) => group.id === state.selectedGroup
         );
         if (prevGroup) prevGroup.active = false;
+        state.selectedGroup = newTodo.groupId;
         currentGroup.active = true;
       }
     },
@@ -93,6 +95,14 @@ const todoSlice = createSlice({
       state.selectedGroup = action.payload;
       if (currentGroup) currentGroup.active = true;
     },
+    toggleChangeMode: (state, action: PayloadAction<string>) => {
+      const currentGroup = findCurrentGroup(state, action.payload);
+      if (currentGroup) currentGroup.changeMode = !currentGroup.changeMode
+    },
+    changeGroupTitle: (state, action: PayloadAction<IchangeGroupTitlePayload>) => {
+      const currentGroup = findCurrentGroup(state, action.payload.groupId);
+      if (currentGroup) currentGroup.title = action.payload.newText
+    }
   },
 });
 
@@ -104,4 +114,6 @@ export const {
   removeTodo,
   toggleCompleteTodo,
   selectGroup,
+  toggleChangeMode,
+  changeGroupTitle
 } = todoSlice.actions;

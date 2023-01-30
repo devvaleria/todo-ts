@@ -24,7 +24,7 @@ function GroupsTodo() {
       <ul>
         {groupsTodo.map((group, key) => (
           <li key={key}>
-            <Group id={group.id} title={group.title} todos={group.todos} active = {group.active}/>
+            <Group changeMode = {group.changeMode} id={group.id} title={group.title} todos={group.todos} active = {group.active}/>
           </li>
         ))}
       </ul>
