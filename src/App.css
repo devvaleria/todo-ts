@@ -38,6 +38,7 @@
   }
 }
 
+
 ul {
   list-style: none;
 }
@@ -57,19 +58,22 @@ ul {
 .groups-todo {
   flex-basis: 30%;
   padding: 20px;
-  border: solid wheat 2px;
+  /* border: solid wheat 2px; */
   border-radius: 20px;
   margin: 0 20px;
+  background-color: rgb(33,33,43);
 }
 
 .elements-todo {
   flex-basis: 70%;
-  border: solid wheat 2px;
+  /* border: solid wheat 2px; */
+  background-color: rgb(33,33,43);
   border-radius: 20px;
 }
 
 .elements-todo__title-group {
   font-size: 25px;
+  padding: 15px 0;
 }
 
 .element-todo__removeTodo {
@@ -94,7 +98,7 @@ ul {
 }
 
 header {
-  background-color: white;
+  background-color: rgba(33,33,43);
   padding: 10px 5% 10px 0;
   color: black;
   text-align: right;
@@ -102,8 +106,11 @@ header {
 
 .group-todo__active{
   transition: 0.2s linear;
-  color:rgb(220, 196, 155);
   font-size: 21px;
-  background-color: rgb(81, 76, 76, 0.23);
+  background-color: rgb(39,39,50);
   border-radius: 30px;
+}
+
+.elements-todo__element-list{
+  margin-bottom: 20px;
 }

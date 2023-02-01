@@ -19,7 +19,7 @@ function GroupsTodo() {
   };
   return (
     <div className="groups-todo">
-      <input value={text} onChange={(e) => setText(e.target.value)} />
+      <input value={text} onChange={(e) => setText(e.target.value)} onKeyDown={(ev) => ev.key === 'Enter' && addTodoGroup()}/>
       <button onClick={() => addTodoGroup()}>Add a task group</button>
       <ul>
         {groupsTodo.map((group, key) => (
