@@ -1,8 +1,7 @@
-import React from 'react'
 
 function Header() {
   return (
-    <header>Header</header>
+    <header><a href = 'https://github.com/devvaleria'>Github devvaleria</a></header>
   )
 }
 

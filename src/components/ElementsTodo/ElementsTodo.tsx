@@ -6,13 +6,13 @@ import { IchangeGroupTitlePayload } from "../../app/models";
 import { useState } from "react";
 
 function ElementsTodo() {
-  const selectedGroup = useAppSelector(
+  const selectedGroupData = useAppSelector(
     (state: RootState) => state.todo.selectedGroup
   );
-  const todoGroups = useAppSelector(
+  const todoGroupsData = useAppSelector(
     (state: RootState) => state.todo.groupsTodo
   );
-  const todos = todoGroups.find((group) => group.id === selectedGroup);
+  const todosData = todoGroupsData.find((group) => group.id === selectedGroupData);
   const dispatch = useAppDispatch();
 
   const changeTitle = ({ groupId, newText }: IchangeGroupTitlePayload) => {
@@ -27,14 +27,14 @@ function ElementsTodo() {
 
   return (
     <div className="elements-todo">
-      {todos && (
+      {todosData && (
         <div className="elements-todo__title-group">
-          {todos.changeMode ? (
+          {todosData.changeMode ? (
             <div>
               <input value={text} onChange={(e) => setText(e.target.value)} />
               <button
                 onClick={(e) =>
-                  changeTitle({ groupId: todos.id, newText: text })
+                  changeTitle({ groupId: todosData.id, newText: text })
                 }
               >
                 Finish editing
@@ -42,8 +42,8 @@ function ElementsTodo() {
             </div>
           ) : (
             <div>
-              <h3>{todos.title.toUpperCase()}</h3>
-              <button onClick={() => dispatch(toggleChangeMode(todos.id))}>
+              <h3>{todosData.title.toUpperCase()}</h3>
+              <button onClick={() => dispatch(toggleChangeMode(todosData.id))}>
                 Edit
               </button>
             </div>
@@ -52,19 +52,19 @@ function ElementsTodo() {
           <hr />
         </div>
       )}
-      {!todos && (
+      {!todoGroupsData && (
         <div>
           <h3>Please, add a group</h3>
         </div>
       )}
       <div className='elements-todo__element-list'>
-        {todos &&
-          todos.todos.map((todo, key) => (
+        {todosData &&
+          todosData.todos.map((todosData, key) => (
             <ElementTodo
-              title={todo.title}
-              id={todo.id}
-              completed={todo.completed}
-              groupId={todo.groupId}
+              title={todosData.title}
+              id={todosData.id}
+              completed={todosData.completed}
+              groupId={todosData.groupId}
               key={key}
               index={key}
             />
